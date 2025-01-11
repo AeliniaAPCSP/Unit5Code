@@ -1,5 +1,6 @@
 package lesson1;
 
+import java.util.Random;
 /**
  * Operations: deposit money, withdraw money, get current balance
  * Instance variables (what makes a bank account, it's properties):
@@ -15,13 +16,26 @@ public class BankAccount {
     private String owner;
 
     //constructors must have same name as class
-    public BankAccount(){
+    public BankAccount(String ownerName){
         balance = 0;
+        owner = ownerName;
+        interestRate = .02;
+        accountNumber = Integer.toString((int) (Math.random()*100000000)); //creates accountNumebr
+        while(accountNumber.length() < 8){ //makes account number 8 digits if it isn't
+            accountNumber = "0" + accountNumber;
+        }
+
     }
 
     //overloaded constructor
-    public BankAccount(double initialBalance){
+    public BankAccount(String ownerName, double initialBalance){
         balance = initialBalance;
+        owner = ownerName;
+        interestRate = .02;
+        accountNumber = Integer.toString((int) (Math.random()*100000000));
+        while(accountNumber.length() < 8){
+            accountNumber = "0" + accountNumber;
+        }
     }
 
     //setters (mutators)
@@ -44,78 +58,29 @@ public class BankAccount {
         return balance;
     }
 
-    @Override
-    public String toString(){
-        return String.format("Balance: $%.2f",balance);
-    }
-}
-
-
-What I made:
-package lesson1;
-
-/**
- * Operations
- * Instance variables (it's proporties):
- * account number, balance, interest rate, bank name, owner name
- */
-
-/**
- * Instructions on the board I didn't
- * do. I was sleeping. sorry.
- * 1) Make a new constuctor that takes name
- * as the perameter along with an initial balance
- * 2) For all constuctors, assign the account
- * number a random 8 digit number
- * 3) Make methods that allow someone to:
- * a) Change account owner
- * b) change interest rate
- * 4) Make an addInterest method that
- * adds x? of interest to the balance
- *
- * idk either. sorry you have to do this
- */
-
-public class BankAccount {
-
-    private String accountNumber;
-    private double balance;
-    private double interestRate;
-    private String bankName;
-    private String owner;
-
-    //constructors must have same name as class
-    public BankAccount(){
-        balance = 0;
-    }
-
-    //overloaded constructors
-    public BankAccount(double initialBalance) {
-        balance = initialBalance;
-    }
-
-    //setters (mutators)
-
-    /**
-     * Deposits a specified amount of money into the'
-     * account
-     * @param amount amount to deposit
-     */
-    public void deposit(double amount){
-        balance += amount;
-    }
-
-    public void withdraw(double amount){
-        balance -= amount;
-    }
-
-    //getter
-    public double getBalance(){
-
+    //getter (accessor)
+    public String getAccountNumber(){
+        return accountNumber;
     }
 
     @Override
     public String toString(){
-        return String.format("Balance: $%.2f" + balance);
+        return String.format("Balance: $%.2f", balance);
+    }
+
+    public void changeOwner(String newOwner){
+        owner = newOwner;
+    }
+    
+    public void changeInterest(double newRate){
+        interestRate = newRate;
+    }
+
+    public void addInterest(){
+        balance *= (1+interestRate);
+    }
+
+    public String getOwner(){
+        return owner;
     }
 }
